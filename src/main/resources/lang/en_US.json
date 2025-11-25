@@ -1,0 +1,16 @@
+{
+  "no_permission": "You don't have permission to do that!",
+  "only_players": "Only players can use this command.",
+  "player_not_found": "Player not found!",
+  "unknown_command": "Unknown command.",
+  "usage_set": "Usage: /nickname set <nickname>",
+  "usage_force": "Usage: /nickname force <player> <nickname>",
+  "usage_namecheck": "Usage: /nickname namecheck <player>",
+  "usage_nicknamecheck": "Usage: /nickname nicknamecheck <player>",
+
+  "nickname_set_self": "Your nickname has been changed to %nickname%.",
+  "nickname_set_other": "The nickname of %player% has been changed to %nickname%.",
+
+  "namecheck_result": "Nickname of %player%: %nickname%",
+  "nicknamecheck_result": "Real name of %player%: %realname%"
+}

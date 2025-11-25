@@ -1,0 +1,25 @@
+name: NickName
+version: '${version}'
+main: de.scholle.nickname.NickName
+prefix: Nickname
+load: STARTUP
+authors: [Mobilestars]
+description: Nicknames for every Player.
+website: https://modrinth.com/project/nickname
+
+commands:
+  nickname:
+    description: Nickname verwalten
+    usage: /nickname <set|force|namecheck|nicknamecheck>
+    aliases: [nick]
+
+permissions:
+  nickname.set:
+    description: Erlaubt das Setzen des eigenen Nicknames
+    default: true
+  nickname.force:
+    description: Erlaubt das Setzen eines fremden Nicknames
+    default: op
+  nickname.check:
+    description: Erlaubt das Abfragen von echten Namen/Nicknames (namecheck / nicknamecheck)
+    default: op
