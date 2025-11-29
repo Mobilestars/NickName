@@ -7,7 +7,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.io.File;
@@ -18,16 +17,13 @@ public class NickName extends JavaPlugin implements CommandExecutor {
 
     @Override
     public void onEnable() {
-        // Ensure language folder and default files exist
         saveDefaultLanguageFiles();
-
         getCommand("nickname").setExecutor(this);
     }
 
     private void saveDefaultLanguageFiles() {
         File langFolder = new File(getDataFolder(), "lang");
         if (!langFolder.exists()) langFolder.mkdirs();
-
         saveResource("lang/en_US.json", false);
         saveResource("lang/de_DE.json", false);
     }
@@ -38,6 +34,7 @@ public class NickName extends JavaPlugin implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
         if (args.length < 1) {
             sender.sendMessage(ChatColor.RED + "Benutzung: /nickname <set|force|namecheck|nicknamecheck> ...");
             return true;
@@ -118,7 +115,22 @@ public class NickName extends JavaPlugin implements CommandExecutor {
         nicknames.put(player.getName(), nickname);
         player.setDisplayName(nickname);
         player.setPlayerListName(nickname);
-        player.setCustomName(nickname);
-        player.setCustomNameVisible(true);
+        applyNameTag(player, nickname);
+    }
+
+    public String getNickname(Player p) {
+        return nicknames.getOrDefault(p.getName(), p.getName());
+    }
+
+    private void applyNameTag(Player player, String nickname) {
+        org.bukkit.scoreboard.Scoreboard board = Bukkit.getScoreboardManager().getMainScoreboard();
+        String teamName = "nick_" + player.getName();
+        if (board.getTeam(teamName) != null) board.getTeam(teamName).unregister();
+        org.bukkit.scoreboard.Team team = board.registerNewTeam(teamName);
+        team.setPrefix("");
+        team.setSuffix("");
+        team.addEntry(player.getName());
+        team.setOption(org.bukkit.scoreboard.Team.Option.NAME_TAG_VISIBILITY, org.bukkit.scoreboard.Team.OptionStatus.ALWAYS);
+        player.setScoreboard(board);
     }
 }
